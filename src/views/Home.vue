@@ -58,6 +58,36 @@
                     </div>
                 </div>
                 <!-- 家电商品展示区域END -->
+
+                <!-- 配件商品展示区域 -->
+                <div class="accessory" id="promo-menu">
+                    <div class="box-hd">
+                        <div class="title">配件</div>
+                        <div class="more" id="more">
+                            <MyMenu :val="3" @fromChild="getChildMsg2">
+                                <span slot="1">热门</span>
+                                <span slot="2">保护套</span>
+                                <span slot="3">充电器</span>
+                            </MyMenu>
+                        </div>
+                    </div>
+                    <div class="box-bd">
+                        <div class="promo-list">
+                            <ul>
+                                <li>
+                                    <img :src="$target + 'public/imgs/accessory/accessory-promo1.png'" alt />
+                                </li>
+                                <li>
+                                    <img :src="$target + 'public/imgs/accessory/accessory-promo2.png'" alt />
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="list">
+                            <MyList :list="accessoryList" :isMore="true"></MyList>
+                        </div>
+                    </div>
+                </div>
+                <!-- 配件商品展示区域END -->
             </div>
         </div>
     </div>
@@ -74,16 +104,22 @@ export default {
         return {
             carousel: '', // 轮播图数据
             phoneList: '', // 手机商品列表
+            // 家电
             miTvList: '', // 小米电视商品列表
             applianceList: '', // 家电商品列表
             applianceHotList: '', //热门家电商品列表
             applianceActive: 1, // 家电当前选中的商品分类
+            // 配件
+            accessoryList: '', //配件商品列表
+            accessoryHotList: '', //热门配件商品列表（热门）
+            protectingShellList: '', // 保护套商品列表
+            chargerList: '', //充电器商品列表
+            accessoryActive: 1, // 配件当前选中的商品分类
         }
     },
     watch: {
         // 家电当前选中的商品分类，响应不同的商品数据
         applianceActive: function(val) {
-            console.log('val = ', val)
             // 页面初始化的时候把applianceHotList(热门家电商品列表)直接赋值给applianceList(家电商品列表)
             // 所以在切换商品列表时判断applianceHotList是否为空,为空则是第一次切换,把applianceList赋值给applianceHotList
             if (this.applianceHotList == '') {
@@ -97,6 +133,29 @@ export default {
             if (val == 2) {
                 // 2为电视商品
                 this.applianceList = this.miTvList
+                return
+            }
+        },
+        // 配件当前选中的商品分类，响应不同的商品数据
+        accessoryActive: function(val) {
+            // 页面初始化的时候把accessoryHotList(热门配件商品列表)直接赋值给accessoryList(配件商品列表)
+            // 所以在切换商品列表时判断accessoryHotList是否为空,为空则是第一次切换,把accessoryList赋值给accessoryHotList
+            if (this.accessoryHotList == '') {
+                this.accessoryHotList = this.accessoryList
+            }
+            if (val == 1) {
+                // 1为热门商品
+                this.accessoryList = this.accessoryHotList
+                return
+            }
+            if (val == 2) {
+                // 2为保护套商品
+                this.accessoryList = this.protectingShellList
+                return
+            }
+            if (val == 3) {
+                //3 为充电器商品
+                this.accessoryList = this.chargerList
                 return
             }
         },
@@ -116,11 +175,18 @@ export default {
         this.getPromo('手机', 'phoneList')
         this.getPromo(['电视机', '空调', '洗衣机'], 'applianceList', '/api/product/getHotProduct') // 家电（热门）
         this.getPromo('电视机', 'miTvList') // 家电（电影影音）
+        this.getPromo('保护套', 'protectingShellList') // 配件（保护套）
+        this.getPromo('充电器', 'chargerList') // 配件（充电器）
+        this.getPromo(['保护套', '保护膜', '充电器', '充电宝'], 'accessoryList', '/api/product/getHotProduct') // 配件（热门）
     },
     methods: {
         // 获取家电模块子组件传过来的数据
         getChildMsg(val) {
             this.applianceActive = val
+        },
+        // 获取配件模块子组件传过来的数据
+        getChildMsg2(val) {
+            this.accessoryActive = val
         },
         // 获取各类商品数据方法封装
         getPromo(categoryName, val, api) {
