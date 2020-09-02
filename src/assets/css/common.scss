@@ -74,3 +74,60 @@
 }
 /* 顶栏容器CSS END */
 
+/* 底栏容器CSS */
+.footer {
+    width: 100%;
+    text-align: center;
+    background: #2f2f2f;
+    padding-bottom: 20px;
+}
+.footer .ng-promise-box {
+    border-bottom: 1px solid #3d3d3d;
+    line-height: 145px;
+}
+.footer .ng-promise-box {
+    margin: 0 auto;
+    border-bottom: 1px solid #3d3d3d;
+    line-height: 145px;
+}
+.footer .ng-promise-box .ng-promise p a {
+    color: #fff;
+    font-size: 20px;
+    margin-right: 210px;
+    padding-left: 44px;
+    height: 40px;
+    display: inline-block;
+    line-height: 40px;
+    text-decoration: none;
+    background: url('./assets/imgs/us-icon.png') no-repeat left 0;
+}
+.footer .github {
+    height: 50px;
+    line-height: 50px;
+    margin-top: 20px;
+}
+.footer .github .github-but {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    background: url('./assets/imgs/github.png') no-repeat;
+}
+.footer .mod_help {
+    text-align: center;
+    color: #888888;
+}
+.footer .mod_help p {
+    margin: 20px 0 16px 0;
+}
+
+.footer .mod_help p a {
+    color: #888888;
+    text-decoration: none;
+}
+.footer .mod_help p a:hover {
+    color: #fff;
+}
+.footer .mod_help p span {
+    padding: 0 22px;
+}
+/* 底栏容器CSS END */
