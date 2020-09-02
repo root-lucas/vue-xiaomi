@@ -52,10 +52,15 @@
                 </el-menu>
             </el-header>
 
-            <el-main>Main</el-main>
+            <!-- 主要区域容器 -->
+            <el-main>
+                <keep-alive>
+                    <router-view></router-view>
+                </keep-alive>
+            </el-main>
+
             <el-footer>Footer</el-footer>
         </el-container>
-        <router-view />
     </div>
 </template>
 <script>
