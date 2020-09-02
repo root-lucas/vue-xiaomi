@@ -55,3 +55,22 @@
     color: white;
 }
 /* 顶部导航栏CSS END */
+
+/* 顶栏容器CSS */
+.el-header .el-menu {
+    max-width: 1225px;
+    margin: 0 auto;
+}
+.el-header .logo {
+    height: 60px;
+    width: 189px;
+    float: left;
+    margin-right: 100px;
+}
+.el-header .so {
+    margin-top: 10px;
+    width: 300px;
+    float: right;
+}
+/* 顶栏容器CSS END */
+

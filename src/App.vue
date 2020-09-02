@@ -34,7 +34,24 @@
                     </ul>
                 </div>
             </div>
-            <el-header>Header</el-header>
+
+            <!-- 顶栏容器 -->
+            <el-header>
+                <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" active-text-color="#409eff" router>
+                    <div class="logo">
+                        <img src="./assets/imgs/logo.png" alt />
+                    </div>
+                    <el-menu-item index="/">首页</el-menu-item>
+                    <el-menu-item index="/goods">全部商品</el-menu-item>
+                    <el-menu-item index="/about">关于我们</el-menu-item>
+                    <div class="so">
+                        <el-input placeholder="请输入搜索内容">
+                            <el-button slot="append" icon="el-icon-search"></el-button>
+                        </el-input>
+                    </div>
+                </el-menu>
+            </el-header>
+
             <el-main>Main</el-main>
             <el-footer>Footer</el-footer>
         </el-container>
@@ -48,7 +65,12 @@ export default {
             isLogin: false,
             getNum: 0,
             visible: false,
+            activeIndex: '', // 头部导航栏选中的标签
         }
+    },
+    beforeUpdate() {
+        // 组件加载即激活的路由（default-active="activeIndex" == index）
+        this.activeIndex = this.$route.path
     },
 }
 </script>
@@ -63,5 +85,6 @@ a,
 a:hover {
     text-decoration: none;
 }
+
 @import './assets/css/common.scss';
 </style>
