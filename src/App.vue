@@ -39,18 +39,21 @@
             <el-header>
                 <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" active-text-color="#409eff" router>
                     <div class="logo">
-                        <img src="./assets/imgs/logo.png" alt />
+                        <router-link to="/">
+                            <img src="./assets/imgs/logo.png" alt />
+                        </router-link>
                     </div>
                     <el-menu-item index="/">首页</el-menu-item>
                     <el-menu-item index="/goods">全部商品</el-menu-item>
                     <el-menu-item index="/about">关于我们</el-menu-item>
                     <div class="so">
-                        <el-input placeholder="请输入搜索内容">
-                            <el-button slot="append" icon="el-icon-search"></el-button>
+                        <el-input placeholder="请输入搜索内容" v-model="search">
+                            <el-button slot="append" icon="el-icon-search" @click="searchClick"></el-button>
                         </el-input>
                     </div>
                 </el-menu>
             </el-header>
+            <!-- 顶栏容器END -->
 
             <!-- 主要区域容器 -->
             <el-main>
@@ -100,11 +103,22 @@ export default {
             getNum: 0,
             visible: false,
             activeIndex: '', // 头部导航栏选中的标签
+            search: '', // 搜索条件
         }
     },
     beforeUpdate() {
         // 组件加载即激活的路由（default-active="activeIndex" == index）
         this.activeIndex = this.$route.path
+    },
+    methods: {
+        // 点击搜索按钮
+        searchClick() {
+            if (this.search != '') {
+                // 跳转到全部商品页面,并传递搜索条件
+                this.$router.push({ path: '/goods', query: { search: this.search } })
+                this.search = ''
+            }
+        },
     },
 }
 </script>
