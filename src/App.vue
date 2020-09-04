@@ -5,20 +5,20 @@
             <div class="topbar">
                 <div class="nav">
                     <ul>
-                        <li v-if="!isLogin">
-                            <el-button type="text">登录</el-button>
+                        <li v-if="!this.$store.getters.getUser">
+                            <el-button type="text" @click="login">登录</el-button>
                             <span class="sep">|</span>
-                            <el-button type="text">注册</el-button>
+                            <el-button type="text" @click="register = true">注册</el-button>
                         </li>
                         <li v-else>
                             欢迎
-                            <el-popover placement="top" width="180">
+                            <el-popover placement="top" width="180" v-model="visible">
                                 <p>确定退出登录吗？</p>
                                 <div style="text-align: right; margin: 10px 0 0">
-                                    <el-button size="mini" type="text">取消</el-button>
-                                    <el-button type="primary" size="mini">确定</el-button>
+                                    <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+                                    <el-button type="primary" size="mini" @click="logout">确定</el-button>
                                 </div>
-                                <el-button type="text" slot="reference">admin</el-button>
+                                <el-button type="text" slot="reference">{{ this.$store.getters.getUser.userName }}</el-button>
                             </el-popover>
                         </li>
                         <li>
@@ -54,6 +54,10 @@
                 </el-menu>
             </el-header>
             <!-- 顶栏容器END -->
+
+            <!-- 登录模块 -->
+            <MyLogin></MyLogin>
+            <MyRegister :register="register" @fromChild="isRegister"></MyRegister>
 
             <!-- 主要区域容器 -->
             <el-main>
@@ -96,11 +100,16 @@
     </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
+import MyLogin from './components/MyLogin'
+import MyRegister from './components/MyRegister'
 export default {
+    components: { MyLogin, MyRegister },
     data() {
         return {
-            isLogin: false,
             getNum: 0,
+            register: false, // 是否显示注册组件
             visible: false,
             activeIndex: '', // 头部导航栏选中的标签
             search: '', // 搜索条件
@@ -110,7 +119,35 @@ export default {
         // 组件加载即激活的路由（default-active="activeIndex" == index）
         this.activeIndex = this.$route.path
     },
+    computed: {
+        ...mapGetters(['getUser']),
+    },
+    created() {
+        // 获取浏览器localStorage，判断用户是否已经登录
+        if (localStorage.getItem('user')) {
+            // 如果已经登录，设置vuex登录状态
+            this.setUser(JSON.parse(localStorage.getItem('user')))
+        }
+    },
     methods: {
+        ...mapActions(['setUser', 'setShowLogin']),
+        login() {
+            // 点击登录按钮, 通过更改vuex的showLogin值显示登录组件
+            this.setShowLogin(true)
+        },
+        // 退出登录
+        logout() {
+            this.visible = false
+            // 清空本地登录信息
+            localStorage.setItem('user', '')
+            // 清空vuex登录信息
+            this.setUser('')
+            this.$message('成功退出登录')
+        },
+        // 接收注册子组件传过来的数据
+        isRegister(val) {
+            this.register = val
+        },
         // 点击搜索按钮
         searchClick() {
             if (this.search != '') {

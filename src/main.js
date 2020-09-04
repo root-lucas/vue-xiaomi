@@ -11,6 +11,7 @@ Vue.config.productionTip = false
 // 设置全局函数及变量
 Vue.prototype.$axios = Axios
 Vue.prototype.$target = 'http://localhost:3000/'
+
 new Vue({
     router,
     store,
