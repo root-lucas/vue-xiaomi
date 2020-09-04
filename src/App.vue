@@ -28,8 +28,10 @@
                             <a>我的收藏</a>
                         </li>
                         <li :class="getNum > 0 ? 'shopCart-full' : 'shopCart'">
-                            <i class="el-icon-shopping-cart-full"></i> 购物车
-                            <span class="num">({{ getNum }})</span>
+                            <router-link to="/shoppingCart">
+                                <i class="el-icon-shopping-cart-full"></i> 购物车
+                                <span class="num">({{ getNum }})</span>
+                            </router-link>
                         </li>
                     </ul>
                 </div>
@@ -108,7 +110,6 @@ export default {
     components: { MyLogin, MyRegister },
     data() {
         return {
-            getNum: 0,
             register: false, // 是否显示注册组件
             visible: false,
             activeIndex: '', // 头部导航栏选中的标签
@@ -120,7 +121,34 @@ export default {
         this.activeIndex = this.$route.path
     },
     computed: {
-        ...mapGetters(['getUser']),
+        ...mapGetters(['getUser', 'getNum']),
+    },
+    watch: {
+        // 获取vuex的登录状态
+        getUser: function(val) {
+            if (val === '') {
+                // 用户没有登录
+                this.setShoppingCart([])
+            } else {
+                // 用户已经登录,获取该用户的购物车信息
+                this.$axios
+                    .post('/api/user/shoppingCart/getShoppingCart', {
+                        user_id: val.user_id,
+                    })
+                    .then((res) => {
+                        if (res.data.code === '001') {
+                            // 001 为成功, 更新vuex购物车状态
+                            this.setShoppingCart(res.data.shoppingCartData)
+                        } else {
+                            // 提示失败信息
+                            this.notifyError(res.data.msg)
+                        }
+                    })
+                    .catch((err) => {
+                        return Promise.reject(err)
+                    })
+            }
+        },
     },
     created() {
         // 获取浏览器localStorage，判断用户是否已经登录
@@ -130,7 +158,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['setUser', 'setShowLogin']),
+        ...mapActions(['setUser', 'setShowLogin', 'setShoppingCart']),
         login() {
             // 点击登录按钮, 通过更改vuex的showLogin值显示登录组件
             this.setShowLogin(true)

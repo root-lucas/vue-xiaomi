@@ -59,7 +59,7 @@
                 </div>
                 <!-- 内容区底部按钮 -->
                 <div class="button">
-                    <el-button class="shop-cart" :disabled="dis">加入购物车</el-button>
+                    <el-button class="shop-cart" :disabled="dis" @click="addShoppingCart">加入购物车</el-button>
                     <el-button class="like">喜欢</el-button>
                 </div>
                 <!-- 内容区底部按钮END -->
@@ -78,6 +78,7 @@
     </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
     data() {
         return {
@@ -101,6 +102,7 @@ export default {
         },
     },
     methods: {
+        ...mapActions(['unshiftShoppingCart', 'addShoppingCartNum']),
         // 获取商品详细信息
         getDetails(val) {
             this.$axios
@@ -122,6 +124,43 @@ export default {
                 })
                 .then((res) => {
                     this.productPicture = res.data.ProductPicture
+                })
+                .catch((err) => {
+                    return Promise.reject(err)
+                })
+        },
+        // 加入购物车
+        addShoppingCart() {
+            // 判断是否登录,没有登录则显示登录组件
+            if (!this.$store.getters.getUser) {
+                this.$store.dispatch('setShowLogin', true)
+                return
+            }
+            this.$axios
+                .post('/api/user/shoppingCart/addShoppingCart', {
+                    user_id: this.$store.getters.getUser.user_id,
+                    product_id: this.productID,
+                })
+                .then((res) => {
+                    switch (res.data.code) {
+                        case '001':
+                            // 新加入购物车成功
+                            this.unshiftShoppingCart(res.data.shoppingCartData[0])
+                            this.$message(res.data.msg)
+                            break
+                        case '002':
+                            // 该商品已经在购物车，数量+1
+                            this.addShoppingCartNum(this.productID)
+                            this.$message(res.data.msg)
+                            break
+                        case '003':
+                            // 商品数量达到限购数量
+                            this.dis = true
+                            this.$message(res.data.msg)
+                            break
+                        default:
+                            this.$message(res.data.msg)
+                    }
                 })
                 .catch((err) => {
                     return Promise.reject(err)
