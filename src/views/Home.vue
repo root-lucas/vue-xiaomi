@@ -95,11 +95,8 @@
 
 <script>
 // @ is an alias to /src
-import MyList from '@/components/MyList'
-import MyMenu from '@/components/MyMenu'
 export default {
     name: 'Home',
-    components: { MyList, MyMenu },
     data() {
         return {
             carousel: '', // 轮播图数据

@@ -23,11 +23,7 @@
     </div>
 </template>
 <script>
-import MyList from '../components/MyList'
 export default {
-    components: {
-        MyList,
-    },
     data() {
         return {
             collectList: [],

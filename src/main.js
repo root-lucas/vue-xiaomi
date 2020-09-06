@@ -2,15 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import Axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
-Vue.config.productionTip = false
 // 设置全局函数及变量
+import Global from './Global'
+import Axios from 'axios'
+
 Vue.prototype.$axios = Axios
-Vue.prototype.$target = 'http://localhost:3000/'
+Vue.use(Global)
 
 // 全局拦截器,在进入需要用户权限的页面前校验是否已经登录
 router.beforeResolve((to, from, next) => {
@@ -32,6 +33,18 @@ router.beforeResolve((to, from, next) => {
     }
     next()
 })
+
+//全局组件
+import MyMenu from './components/MyMenu'
+Vue.component(MyMenu.name, MyMenu)
+import MyList from './components/MyList'
+Vue.component(MyList.name, MyList)
+import MyLogin from './components/MyLogin'
+Vue.component(MyLogin.name, MyLogin)
+import MyRegister from './components/MyRegister'
+Vue.component(MyRegister.name, MyRegister)
+
+Vue.config.productionTip = false
 
 new Vue({
     router,

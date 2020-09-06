@@ -102,10 +102,7 @@
 <script>
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
-import MyLogin from './components/MyLogin'
-import MyRegister from './components/MyRegister'
 export default {
-    components: { MyLogin, MyRegister },
     data() {
         return {
             register: false, // 是否显示注册组件
