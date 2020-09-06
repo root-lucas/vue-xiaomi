@@ -5,7 +5,7 @@
             <div class="topbar">
                 <div class="nav">
                     <ul>
-                        <li v-if="!this.$store.getters.getUser">
+                        <li v-if="!isLogin">
                             <el-button type="text" @click="login">登录</el-button>
                             <span class="sep">|</span>
                             <el-button type="text" @click="register = true">注册</el-button>
@@ -100,11 +100,11 @@
     </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
     data() {
         return {
+            isLogin: false,
             register: false, // 是否显示注册组件
             visible: false,
             activeIndex: '', // 头部导航栏选中的标签
@@ -133,10 +133,11 @@ export default {
                     .then((res) => {
                         if (res.data.code === '001') {
                             // 001 为成功, 更新vuex购物车状态
+                            this.isLogin = true
                             this.setShoppingCart(res.data.shoppingCartData)
                         } else {
                             // 提示失败信息
-                            this.notifyError(res.data.msg)
+                            // this.notifyError(res.data.msg)
                         }
                     })
                     .catch((err) => {
@@ -160,6 +161,7 @@ export default {
         },
         // 退出登录
         logout() {
+            this.isLogin = false
             this.visible = false
             // 清空本地登录信息
             localStorage.setItem('user', '')

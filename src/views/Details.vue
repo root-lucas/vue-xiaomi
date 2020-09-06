@@ -59,7 +59,9 @@
                 </div>
                 <!-- 内容区底部按钮 -->
                 <div class="button">
-                    <el-button class="shop-cart" :disabled="dis" @click="addShoppingCart">加入购物车</el-button>
+                    <el-button class="shop-cart" :disabled="dis" @click="addShoppingCart">
+                        {{ notCart ? '已加入购物车' : '加入购物车' }}
+                    </el-button>
                     <el-button class="like" @click="addCollect">喜欢</el-button>
                 </div>
                 <!-- 内容区底部按钮END -->
@@ -86,12 +88,21 @@ export default {
             productID: '', // 商品id
             productDetails: '', // 商品详细信息
             productPicture: '', // 商品图片
+            notCart: false,
         }
     },
     // 通过路由获取商品id
     activated() {
+        // console.log('mouted = ', this.$route.query.productID)
         if (this.$route.query.productID != undefined) {
             this.productID = this.$route.query.productID
+            this.notCart = false
+            this.$store.state.shoppingCart.shoppingCart.forEach((item) => {
+                if (item.productID == this.productID) {
+                    this.notCart = true
+                    // console.log(this.notCart)
+                }
+            })
         }
     },
     watch: {
@@ -142,6 +153,7 @@ export default {
                     product_id: this.productID,
                 })
                 .then((res) => {
+                    this.notCart = true
                     switch (res.data.code) {
                         case '001':
                             // 新加入购物车成功
