@@ -137,7 +137,7 @@ export default {
                                 val: currentValue,
                             })
                             // 提示更新成功信息
-                            this.notifySucceed(res.data.msg)
+                            this.$message(res.data.msg)
                             break
                         default:
                             // 提示更新失败信息

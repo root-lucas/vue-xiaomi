@@ -60,7 +60,7 @@
                 <!-- 内容区底部按钮 -->
                 <div class="button">
                     <el-button class="shop-cart" :disabled="dis" @click="addShoppingCart">加入购物车</el-button>
-                    <el-button class="like">喜欢</el-button>
+                    <el-button class="like" @click="addCollect">喜欢</el-button>
                 </div>
                 <!-- 内容区底部按钮END -->
                 <div class="pro-policy">
@@ -160,6 +160,31 @@ export default {
                             break
                         default:
                             this.$message(res.data.msg)
+                    }
+                })
+                .catch((err) => {
+                    return Promise.reject(err)
+                })
+        },
+        // 加入收藏
+        addCollect() {
+            // 判断是否登录,没有登录则显示登录组件
+            if (!this.$store.getters.getUser) {
+                this.$store.dispatch('setShowLogin', true)
+                return
+            }
+            this.$axios
+                .post('/api/user/collect/addCollect', {
+                    user_id: this.$store.getters.getUser.user_id,
+                    product_id: this.productID,
+                })
+                .then((res) => {
+                    if (res.data.code == '001') {
+                        // 添加收藏成功
+                        this.$message(res.data.msg)
+                    } else {
+                        // 添加收藏失败
+                        this.$message(res.data.msg)
                     }
                 })
                 .catch((err) => {

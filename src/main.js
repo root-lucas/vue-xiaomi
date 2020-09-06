@@ -12,6 +12,8 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = Axios
 Vue.prototype.$target = 'http://localhost:3000/'
 
+
+
 new Vue({
     router,
     store,

@@ -28,6 +28,14 @@ const routes = [
         },
     },
     {
+        path: '/collect',
+        name: 'Collect',
+        component: () => import('../views/Collect.vue'),
+        meta: {
+            requireAuth: true, // 需要验证登录状态
+        },
+    },
+    {
         path: '/error',
         name: 'Error',
         component: () => import('../components/Error.vue'),
