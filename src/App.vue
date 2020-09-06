@@ -22,7 +22,7 @@
                             </el-popover>
                         </li>
                         <li>
-                            <a>我的订单</a>
+                            <router-link to="/order">我的订单</router-link>
                         </li>
                         <li><router-link to="/collect">我的收藏</router-link></li>
                         <li :class="getNum > 0 ? 'shopCart-full' : 'shopCart'">
