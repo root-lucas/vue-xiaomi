@@ -189,6 +189,16 @@ export default {
     border: 0;
     list-style: none;
 }
+#app .el-header {
+    padding: 0;
+}
+#app .el-main {
+    min-height: 300px;
+    padding: 20px 0;
+}
+#app .el-footer {
+    padding: 0;
+}
 a,
 a:hover {
     text-decoration: none;
