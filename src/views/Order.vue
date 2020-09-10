@@ -18,6 +18,16 @@
                     <!-- 我的订单表头 -->
                     <li class="order-info">
                         <div class="order-id">订单编号: {{ item[0].order_id }}</div>
+                        <div class="order-del">
+                            <el-popconfirm
+                                title="确定要删除该订单吗?"
+                                confirmButtonText="是的"
+                                cancelButtonText="留着"
+                                @onConfirm="delOrder(item[0].order_id)"
+                            >
+                                <el-button slot="reference" type="danger" icon="el-icon-delete" circle></el-button>
+                            </el-popconfirm>
+                        </div>
                         <div class="order-time">订单时间: {{ item[0].order_time | dateFormat }}</div>
                     </li>
                     <li class="header">
@@ -86,21 +96,7 @@ export default {
     },
     activated() {
         // 获取订单数据
-        this.$axios
-            .post('/api/user/order/getOrder', {
-                user_id: this.$store.getters.getUser.user_id,
-            })
-            .then((res) => {
-                console.log('getOrder = ', res)
-                if (res.data.code === '001') {
-                    this.orders = res.data.orders
-                } else {
-                    this.notifyError(res.data.msg)
-                }
-            })
-            .catch((err) => {
-                return Promise.reject(err)
-            })
+        this.getOrder()
     },
     watch: {
         // 通过订单信息，计算出每个订单的商品数量及总价
@@ -119,6 +115,46 @@ export default {
                 total.push({ totalNum, totalPrice })
             }
             this.total = total
+        },
+    },
+    methods: {
+        getOrder() {
+            this.$axios
+                .post('/api/user/order/getOrder', {
+                    user_id: this.$store.getters.getUser.user_id,
+                })
+                .then((res) => {
+                    // console.log('getOrder = ', res)
+                    if (res.data.code === '001') {
+                        this.orders = res.data.orders
+                    } else {
+                        this.notifyError(res.data.msg)
+                    }
+                })
+                .catch((err) => {
+                    return Promise.reject(err)
+                })
+        },
+        delOrder(order) {
+            console.log('delOrder = ', order)
+            this.$axios
+                .post('/api/user/order/deleteOrder', {
+                    user_id: this.$store.getters.getUser.user_id,
+                    order_id: order,
+                })
+                .then((res) => {
+                    console.log('deleteOrder = ', res)
+                    if (res.data.code === '001') {
+                        // this.$router.go(0) // 重新加载整个组件给用户体验不好
+                        this.getOrder()
+                        this.$message('删除订单成功')
+                    } else {
+                        this.notifyError(res.data.msg)
+                    }
+                })
+                .catch((err) => {
+                    return Promise.reject(err)
+                })
         },
     },
 }
@@ -171,8 +207,13 @@ export default {
     float: left;
     color: #ff6700;
 }
-.order .content ul .order-info .order-time {
+.order .content ul .order-info .order-del {
     float: right;
+    margin-right: 10px;
+}
+.order .content ul .order-info .order-time {
+    /* float: right; */
+    text-align: center;
 }
 
 .order .content ul .header {
