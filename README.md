@@ -1,6 +1,6 @@
 ## 项目简介
 
-这是一个模仿小米商城实现主要功能点的项目。
+这是一个模仿小米商城实现主要功能点的电商项目。
 
 前端包含了 11 个页面：首页、登录、注册、全部商品、商品详情页、关于我们、我的收藏、购物车、订单结算页面、我的订单以及错误处理页面。
 
@@ -54,3 +54,33 @@ npm run build
 ```
 
 > 如果觉得这个项目还不错，您可以点右上角 `Star`支持一下， 谢谢！ ^\_^
+
+## 项目页面截图
+
+**首页**
+
+![](https://raw.githubusercontent.com/root-lucas/vue-xiaomi/master/public/screenshots/home.png)
+
+**全部商品**
+
+![](https://raw.githubusercontent.com/root-lucas/vue-xiaomi/master/public/screenshots/goods.png)
+
+**购物车**
+
+![](https://raw.githubusercontent.com/root-lucas/vue-xiaomi/master/public/screenshots/shoppingCart.png)
+
+**我的收藏**
+
+![](https://raw.githubusercontent.com/root-lucas/vue-xiaomi/master/public/screenshots/collect.png)
+
+**我的订单**
+
+![](https://raw.githubusercontent.com/root-lucas/vue-xiaomi/master/public/screenshots/order.png)
+
+**登录**
+
+![](https://raw.githubusercontent.com/root-lucas/vue-xiaomi/master/public/screenshots/login.png)
+
+**注册**
+
+![](https://raw.githubusercontent.com/root-lucas/vue-xiaomi/master/public/screenshots/register.png)
