@@ -193,7 +193,7 @@ export default {
                     categoryName,
                 })
                 .then((res) => {
-                    this[val] = res.data.Product
+                    this[val] = res.data.Product.slice(0, 7)
                 })
                 .catch((err) => {
                     return Promise.reject(err)

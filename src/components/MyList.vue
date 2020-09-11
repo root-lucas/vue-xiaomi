@@ -20,8 +20,10 @@
                 </router-link>
             </li>
             <li v-show="isMore && list.length >= 1" id="more">
-                浏览更多
-                <i class="el-icon-d-arrow-right"></i>
+                <router-link :to="{ path: '/goods', query: { categoryID: categoryID } }">
+                    浏览更多
+                    <i class="el-icon-d-arrow-right"></i>
+                </router-link>
             </li>
         </ul>
     </div>
@@ -35,6 +37,21 @@ export default {
     props: ['list', 'isMore', 'isDelete'],
     data() {
         return {}
+    },
+    computed: {
+        // 通过list获取当前显示的商品的分类ID，用于“浏览更多”链接的参数
+        categoryID: function() {
+            let categoryID = []
+            if (this.list != '') {
+                for (let i = 0; i < this.list.length; i++) {
+                    const id = this.list[i].category_id
+                    if (!categoryID.includes(id)) {
+                        categoryID.push(id)
+                    }
+                }
+            }
+            return categoryID
+        },
     },
     methods: {
         deleteCollect(product_id) {
