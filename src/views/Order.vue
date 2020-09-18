@@ -124,10 +124,11 @@ export default {
                     user_id: this.$store.getters.getUser.user_id,
                 })
                 .then((res) => {
-                    // console.log('getOrder = ', res)
                     if (res.data.code === '001') {
                         this.orders = res.data.orders
-                    } else {
+                        // 002订单为空
+                    } else if (res.data.code === '002') {
+                        this.orders = []
                         this.notifyError(res.data.msg)
                     }
                 })
@@ -136,18 +137,16 @@ export default {
                 })
         },
         delOrder(order) {
-            console.log('delOrder = ', order)
             this.$axios
                 .post('/api/user/order/deleteOrder', {
                     user_id: this.$store.getters.getUser.user_id,
                     order_id: order,
                 })
                 .then((res) => {
-                    console.log('deleteOrder = ', res)
                     if (res.data.code === '001') {
                         // this.$router.go(0) // 重新加载整个组件给用户体验不好
                         this.getOrder()
-                        this.$message('删除订单成功')
+                        this.notifySucceed('删除订单成功')
                     } else {
                         this.notifyError(res.data.msg)
                     }

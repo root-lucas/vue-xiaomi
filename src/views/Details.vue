@@ -158,20 +158,20 @@ export default {
                         case '001':
                             // 新加入购物车成功
                             this.unshiftShoppingCart(res.data.shoppingCartData[0])
-                            this.$message(res.data.msg)
+                            this.notifySucceed(res.data.msg)
                             break
                         case '002':
                             // 该商品已经在购物车，数量+1
                             this.addShoppingCartNum(this.productID)
-                            this.$message(res.data.msg)
+                            this.notifySucceed(res.data.msg)
                             break
                         case '003':
                             // 商品数量达到限购数量
                             this.dis = true
-                            this.$message(res.data.msg)
+                            this.notifyError(res.data.msg)
                             break
                         default:
-                            this.$message(res.data.msg)
+                            this.notifyError(res.data.msg)
                     }
                 })
                 .catch((err) => {
@@ -193,10 +193,10 @@ export default {
                 .then((res) => {
                     if (res.data.code == '001') {
                         // 添加收藏成功
-                        this.$message(res.data.msg)
+                        this.notifySucceed(res.data.msg)
                     } else {
                         // 添加收藏失败
-                        this.$message(res.data.msg)
+                        this.notifyError(res.data.msg)
                     }
                 })
                 .catch((err) => {

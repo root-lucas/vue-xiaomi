@@ -137,7 +137,7 @@ export default {
                                 val: currentValue,
                             })
                             // 提示更新成功信息
-                            this.$message(res.data.msg)
+                            this.notifySucceed(res.data.msg)
                             break
                         default:
                             // 提示更新失败信息
@@ -166,11 +166,11 @@ export default {
                             // 更新vuex状态
                             this.deleteShoppingCart(id)
                             // 提示删除成功信息
-                            this.$message(res.data.msg)
+                            this.notifySucceed(res.data.msg)
                             break
                         default:
                             // 提示删除失败信息
-                            this.$message(res.data.msg)
+                            this.notifyError(res.data.msg)
                     }
                 })
                 .catch((err) => {

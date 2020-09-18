@@ -96,12 +96,12 @@ export default {
                                 // 登录信息存到vuex
                                 this.setUser(res.data.user)
                                 // 弹出通知框提示登录成功信息
-                                this.$message(res.data.msg)
+                                this.notifySucceed(res.data.msg)
                             } else {
                                 // 清空输入框的校验状态
                                 this.$refs['ruleForm'].resetFields()
                                 // 弹出通知框提示登录失败信息
-                                this.$message(res.data.msg)
+                                this.notifyError(res.data.msg)
                             }
                         })
                         .catch((err) => {

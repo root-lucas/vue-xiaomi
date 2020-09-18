@@ -1,4 +1,4 @@
-// 注意设置了本文件需要重新 yarn run serve 启动项目
+﻿// 注意设置了本文件需要重新 yarn run serve 启动项目
 module.exports = {
     publicPath: '/',
     outputDir: 'dist',

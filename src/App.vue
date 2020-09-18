@@ -167,7 +167,7 @@ export default {
             localStorage.setItem('user', '')
             // 清空vuex登录信息
             this.setUser('')
-            this.$message('成功退出登录')
+            this.notifySucceed('成功退出登录')
         },
         // 接收注册子组件传过来的数据
         isRegister(val) {

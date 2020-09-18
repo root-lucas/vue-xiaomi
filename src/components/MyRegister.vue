@@ -3,7 +3,7 @@
  * @Author: hai-27
  * @Date: 2020-02-19 22:20:35
  * @LastEditors  : lucas
- * @LastEditTime : 2020-09-05 03:38:34
+ * @LastEditTime : 2020-09-19 05:47:14
  -->
 <template>
     <div id="register">
@@ -138,10 +138,10 @@ export default {
                                 // 隐藏注册组件
                                 this.isRegister = false
                                 // 弹出通知框提示注册成功信息
-                                this.$message(res.data.msg)
+                                this.notifySucceed(res.data.msg)
                             } else {
                                 // 弹出通知框提示注册失败信息
-                                this.$message(res.data.msg)
+                                this.notifyError(res.data.msg)
                             }
                         })
                         .catch((err) => {

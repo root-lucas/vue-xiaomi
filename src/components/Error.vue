@@ -7,7 +7,7 @@
 <script>
 export default {
     mounted() {
-        this.$message('检查下路由!')
+        this.notifyError('检查下路由!')
     },
 }
 </script>

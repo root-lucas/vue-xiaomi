@@ -72,11 +72,11 @@ export default {
                                 }
                             }
                             // 提示删除成功信息
-                            this.$message(res.data.msg)
+                            this.notifySucceed(res.data.msg)
                             break
                         default:
                             // 提示删除失败信息
-                            this.$message(res.data.msg)
+                            this.notifyError(res.data.msg)
                     }
                 })
                 .catch((err) => {
