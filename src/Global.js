@@ -1,6 +1,7 @@
 
 exports.install = function(Vue) {
     Vue.prototype.$target = 'http://localhost:3000/' // 本地后端地址
+    // Vue.prototype.$target = 'http://你的公网ip地址:3000/' // 线上后端地址
     // 封装提示成功的弹出框
     Vue.prototype.notifySucceed = function(msg) {
         this.$notify({
